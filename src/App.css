@@ -69,10 +69,6 @@ body {
   }
 }
 
-body {
-  margin: 1em;
-}
-
 button {
   margin: 0.2em 0.1em;
 }
@@ -89,4 +85,21 @@ div#videos > video {
   height: 100%;
   display: block;
   margin: 1em;
+}
+
+#mydiv {
+  position: absolute;
+  z-index: 9;
+  background-color: gray;
+  border: 1px solid #d3d3d3;
+  text-align: center;
+  height: 150px;
+  width: auto;
+}
+
+#mydivheader {
+  cursor: move;
+  z-index: 10;
+  background-color: #2196f3;
+  color: #fff;
 }
