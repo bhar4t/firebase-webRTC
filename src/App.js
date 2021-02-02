@@ -2,6 +2,31 @@ import React from "react";
 import { db } from "./store";
 import "./App.css";
 
+const styles = {
+  video: {
+    background: 'rgb(0,0,0)',
+    background: '-moz-linear-gradient(328deg, rgba(0,0,0,1) 81%, rgba(0,77,93,1) 100%)',
+    background: '-webkit-linear-gradient(328deg, rgba(0,0,0,1) 81%, rgba(0,77,93,1) 100%)',
+    background: 'linear-gradient(328deg, rgba(0,0,0,1) 81%, rgba(0,77,93,1) 100%)',
+    filter: 'progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#004d5d",GradientType=1)',
+    display: 'block',
+    width: '100%',
+    height: '100%',
+    objectFit: 'contain'
+  },
+  localVideo: {
+    background: 'rgb(0,0,0)',
+    background: '-moz-linear-gradient(328deg, rgba(0,0,0,1) 81%, rgba(0,77,93,1) 100%)',
+    background: '-webkit-linear-gradient(328deg, rgba(0,0,0,1) 81%, rgba(0,77,93,1) 100%)',
+    background: 'linear-gradient(328deg, rgba(0,1,1,1) 64%, rgba(0,212,255,1) 100%)',
+    filter: 'progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#004d5d",GradientType=1)',
+    height: 130,
+    width: 'auto',
+    objectFit: 'contain'
+  },
+  container: { height: window.innerHeight, width: window.innerWidth, backgroundColor: 'gray' }
+}
+
 const configuration = {
   iceServers: [
     {
@@ -110,7 +135,7 @@ function App() {
   function joinRoom() {
     document.querySelector("#createBtn").disabled = true;
     document.querySelector("#joinBtn").disabled = true;
-    joinRoomById(prompt("Please Enter Key", "XYZaBCdef"));
+    joinRoomById(prompt("Please Enter Key", ""));
   }
 
   async function joinRoomById(roomId) {
@@ -323,12 +348,11 @@ function App() {
         </button>
       </div>
       <div id="currentRoom"></div>
-      <div style={{ height: window.innerHeight, width: window.innerWidth, backgroundColor: 'gray' }} >
-
+      <div style={styles.container} >
         <div id="mydiv">
           <div id="mydivheader">Move</div>
           <video
-            style={{ backgroundColor: 'black', height: 130, width: 'auto', objectFit: 'contain' }}
+            style={styles.localVideo}
             ref={localVideo}
             id="localVideo"
             muted
@@ -336,14 +360,7 @@ function App() {
             playsInline
           ></video>
         </div>
-
-        <video style={{
-          backgroundColor: 'black',
-          display: 'block',
-          width: '100%',
-          height: '100%',
-          objectFit: 'contain'
-        }} ref={remoteVideo} id="remoteVideo" autoPlay playsInline></video>
+        <video style={styles.video} ref={remoteVideo} id="remoteVideo" autoPlay playsInline></video>
       </div>
     </>
   );
