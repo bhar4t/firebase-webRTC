@@ -1,11 +1,12 @@
 import * as firebase from "firebase";
 import "firebase/app";
-import "firebase/auth";
-import "firebase/database";
 import "firebase/firestore";
-import "firebase/storage";
-import "firebase/messaging";
-import "firebase/functions";
+
+// import "firebase/auth";
+// import "firebase/database";
+// import "firebase/storage";
+// import "firebase/messaging";
+// import "firebase/functions";
 
 let app = firebase.initializeApp({
   apiKey: "AIzaSyC0s2xwTwLSqtCJYJc8Zub1Otiao-Y5NaI",
