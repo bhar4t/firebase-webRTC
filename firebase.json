@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "rtc-fire",
+    "site": "me-and-you",
     "public": "build",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
