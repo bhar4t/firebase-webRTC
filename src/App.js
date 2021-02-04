@@ -13,14 +13,16 @@ const styles = {
   },
   video: {
     display: 'block',
-    width: '80%',
-    height: '80%',
+    width: '100%',
+    height: '100%',
+    borderRadius: 20
   },
   localVideo: {
     height: 130,
     width: 'auto',
+    borderRadius: '0px 0px 20px 20px',
   },
-  container: { height: window.innerHeight - 100, width: window.innerWidth- 100, backgroundColor: 'gray' }
+  container: { height: '100%', width: '100%', backgroundColor: 'gray', borderRadius: 20 }
 }
 
 const configuration = {
@@ -52,7 +54,7 @@ function App() {
     document.querySelector("#createBtn").disabled = true;
     document.querySelector("#joinBtn").disabled = true;
     const roomRef = await db.collection("rooms").doc();
-
+    console.log(roomRef);
     console.log("Create PeerConnection with configuration: ", configuration);
     peerConnection = new RTCPeerConnection(configuration);
 
@@ -88,10 +90,10 @@ function App() {
     };
     await roomRef.set(roomWithOffer);
     roomId = roomRef.id;
-    console.log(`New room created with SDP offer. Room ID: ${roomRef.id}`);
+    console.log(`New room created with SDP offer. Room ID: ${roomRef.id} - You are the caller!`);
     document.querySelector(
       "#currentRoom"
-    ).innerText = `Current room is ${roomRef.id} - You are the caller!`;
+    ).innerText = `room id: ${roomRef.id}`;
     // Code for creating a room above
 
     peerConnection.addEventListener("track", (event) => {
@@ -205,6 +207,7 @@ function App() {
       video: true,
       audio: true,
     });
+
     localVideo.current.srcObject = stream;
     localStream = stream;
     remoteStream = new MediaStream();
@@ -327,21 +330,10 @@ function App() {
 
   return (
     <>
-    <div id="buttons">
-        <button disabled id="createBtn">
-          Create Meet
-        </button>
-        <button disabled id="joinBtn">
-          Join Meet
-        </button>
-        <button disabled id="hangupBtn">
-          Hangup
-        </button>
-      </div>
-      <div id="currentRoom"></div>
+    <div id='main' style={{ backgroundColor: 'rgb(24 80 97)', height: window.innerHeight, width: window.innerWidth, display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
       <div style={styles.container} >
         <div id="mydiv">
-          <div id="mydivheader">Move</div>
+          <div id="mydivheader">move</div>
           <video
             style={{...styles.localVideo, ...styles.layer }}
             ref={localVideo}
@@ -351,9 +343,36 @@ function App() {
             playsInline
           ></video>
         </div>
-        <div style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', objectFit: 'cover' }}>
+        <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', objectFit: 'cover' }}>
           <video style={{ ...styles.video, ...styles.layer }} ref={remoteVideo} id="remoteVideo" autoPlay playsInline></video>
         </div>
+      </div>
+    </div>
+    <div id="buttons" style={{
+        position: 'absolute',
+        bottom: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 100,
+        width: window.innerWidth,
+        background: 'rgba( 255, 255, 255, 0.25 )',
+        boxShadow: '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )',
+        backdropFilter: 'blur( 3.0px )',
+        webkitBackdropFilter: 'blur( 3.0px )',
+        borderRadius: '10px 10px 0px 0px',
+        border: '1px solid rgba( 255, 255, 255, 0.18 )',
+      }}>
+        <button disabled id="createBtn">
+          Create Meet
+        </button>
+        <button disabled id="joinBtn">
+          Join Meet
+        </button>
+        <button disabled id="hangupBtn">
+          Hangup
+        </button>
+        <div id="currentRoom"></div>
       </div>
     </>
   );

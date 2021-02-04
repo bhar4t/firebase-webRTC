@@ -56,21 +56,30 @@ body {
   font-size: 13px;
 }
 
-@media (max-width: 600px) {
-  body,
-  #message {
-    margin-top: 0;
-    background: white;
-    box-shadow: none;
-  }
-
-  body {
-    border-top: 16px solid #ffa100;
-  }
-}
-
 button {
   margin: 0.2em 0.1em;
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #eceaea, #d9ddde);
+  background-image: -moz-linear-gradient(top, #eceaea, #d9ddde);
+  background-image: -ms-linear-gradient(top, #eceaea, #d9ddde);
+  background-image: -o-linear-gradient(top, #eceaea, #d9ddde);
+  background-image: linear-gradient(to bottom, #eceaea, #d9ddde);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  color: black;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+button:hover {
+  color: #fff;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
 }
 
 div#videos {
@@ -90,8 +99,8 @@ div#videos > video {
 #mydiv {
   position: absolute;
   z-index: 9;
-  background-color: gray;
-  border: 1px solid #d3d3d3;
+  background-color: transparent;
+  /* border: 1px solid #d3d3d3; */
   text-align: center;
   height: 150px;
   width: auto;
@@ -100,6 +109,7 @@ div#videos > video {
 #mydivheader {
   cursor: move;
   z-index: 10;
-  background-color: #2196f3;
+  background-color: rgb(24 80 97);
+  border-radius: 20px 20px 0px 0px;
   color: #fff;
 }
