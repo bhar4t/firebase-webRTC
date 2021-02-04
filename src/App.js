@@ -3,28 +3,24 @@ import { db } from "./store";
 import "./App.css";
 
 const styles = {
-  video: {
+  layer: {
     background: 'rgb(0,0,0)',
     background: '-moz-linear-gradient(328deg, rgba(0,0,0,1) 81%, rgba(0,77,93,1) 100%)',
     background: '-webkit-linear-gradient(328deg, rgba(0,0,0,1) 81%, rgba(0,77,93,1) 100%)',
     background: 'linear-gradient(328deg, rgba(0,0,0,1) 81%, rgba(0,77,93,1) 100%)',
     filter: 'progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#004d5d",GradientType=1)',
+    objectFit: 'contain',
+  },
+  video: {
     display: 'block',
-    width: '100%',
-    height: '100%',
-    objectFit: 'contain'
+    width: '80%',
+    height: '80%',
   },
   localVideo: {
-    background: 'rgb(0,0,0)',
-    background: '-moz-linear-gradient(328deg, rgba(0,0,0,1) 81%, rgba(0,77,93,1) 100%)',
-    background: '-webkit-linear-gradient(328deg, rgba(0,0,0,1) 81%, rgba(0,77,93,1) 100%)',
-    background: 'linear-gradient(328deg, rgba(0,1,1,1) 64%, rgba(0,212,255,1) 100%)',
-    filter: 'progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#004d5d",GradientType=1)',
     height: 130,
     width: 'auto',
-    objectFit: 'contain'
   },
-  container: { height: window.innerHeight, width: window.innerWidth, backgroundColor: 'gray' }
+  container: { height: window.innerHeight - 100, width: window.innerWidth- 100, backgroundColor: 'gray' }
 }
 
 const configuration = {
@@ -41,13 +37,11 @@ function App() {
   let localStream = null;
   let remoteStream = null;
   let roomId = null;
-
   let localVideo = React.useRef();
   let remoteVideo = React.useRef();
+
   React.useEffect(() => {
-    document
-      .querySelector("#cameraBtn")
-      .addEventListener("click", openUserMedia);
+    openUserMedia();
     document.querySelector("#hangupBtn").addEventListener("click", hangUp);
     document.querySelector("#createBtn").addEventListener("click", createRoom);
     document.querySelector("#joinBtn").addEventListener("click", joinRoom);
@@ -206,7 +200,7 @@ function App() {
     }
   }
 
-  async function openUserMedia(e) {
+  async function openUserMedia() {
     const stream = await navigator.mediaDevices.getUserMedia({
       video: true,
       audio: true,
@@ -216,7 +210,6 @@ function App() {
     remoteStream = new MediaStream();
     remoteVideo.current.srcObject = remoteStream;
     console.log("Stream:", localVideo.current.srcObject);
-    document.querySelector("#cameraBtn").disabled = true;
     document.querySelector("#joinBtn").disabled = false;
     document.querySelector("#createBtn").disabled = false;
     document.querySelector("#hangupBtn").disabled = false;
@@ -239,7 +232,6 @@ function App() {
 
     localVideo.current.srcObject = null;
     remoteVideo.current.srcObject = null;
-    document.querySelector("#cameraBtn").disabled = false;
     document.querySelector("#joinBtn").disabled = true;
     document.querySelector("#createBtn").disabled = true;
     document.querySelector("#hangupBtn").disabled = true;
@@ -335,13 +327,12 @@ function App() {
 
   return (
     <>
-      <div id="buttons">
-        <button id="cameraBtn">Open camera & microphone</button>
+    <div id="buttons">
         <button disabled id="createBtn">
-          Create room
+          Create Meet
         </button>
         <button disabled id="joinBtn">
-          Join room
+          Join Meet
         </button>
         <button disabled id="hangupBtn">
           Hangup
@@ -352,7 +343,7 @@ function App() {
         <div id="mydiv">
           <div id="mydivheader">Move</div>
           <video
-            style={styles.localVideo}
+            style={{...styles.localVideo, ...styles.layer }}
             ref={localVideo}
             id="localVideo"
             muted
@@ -360,7 +351,9 @@ function App() {
             playsInline
           ></video>
         </div>
-        <video style={styles.video} ref={remoteVideo} id="remoteVideo" autoPlay playsInline></video>
+        <div style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', objectFit: 'cover' }}>
+          <video style={{ ...styles.video, ...styles.layer }} ref={remoteVideo} id="remoteVideo" autoPlay playsInline></video>
+        </div>
       </div>
     </>
   );
